@@ -3,74 +3,76 @@ from PIL import Image
 import requests
 from io import BytesIO
 
-# 블럭 데이터 정의
+# 블록 데이터 (이미지 URL 포함)
 block_data = {
-    "Crafting Table": {
-        "description": "아이템을 제작할 수 있는 기본 제작대입니다.",
-        "recipe": [
-            ["Oak Planks", "Oak Planks"],
-            ["Oak Planks", "Oak Planks"]
-        ],
-        "image_url": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/0/07/Crafting_Table_JE5_BE5.png"
+    "Oak Log": {
+        :contentReference[oaicite:1]{index=1}
+        "recipe": None,
+        :contentReference[oaicite:2]{index=2}
     },
     "Oak Planks": {
-        "description": "나무를 가공해서 만든 기본 블럭입니다.",
+        :contentReference[oaicite:3]{index=3}
         "recipe": [
-            ["Oak Log"]
+            :contentReference[oaicite:4]{index=4}
+            :contentReference[oaicite:5]{index=5}
         ],
-        "image_url": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/55/Oak_Planks.png"
+        :contentReference[oaicite:6]{index=6}
     },
-    "Oak Log": {
-        "description": "오크 나무에서 직접 얻을 수 있는 기본 자원입니다.",
-        "recipe": None,
-        "image_url": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/59/Oak_Log.png"
-    },
-    "Furnace": {
-        "description": "아이템을 제련하거나 굽는 데 사용됩니다.",
+    "Crafting Table": {
+        :contentReference[oaicite:7]{index=7}
         "recipe": [
-            ["Cobblestone", "Cobblestone", "Cobblestone"],
-            ["Cobblestone",     None,     "Cobblestone"],
-            ["Cobblestone", "Cobblestone", "Cobblestone"]
+            :contentReference[oaicite:8]{index=8}
+            :contentReference[oaicite:9]{index=9}
+            :contentReference[oaicite:10]{index=10}
         ],
-        "image_url": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/9a/Furnace_JE5_BE5.png"
+        :contentReference[oaicite:11]{index=11}
     },
     "Cobblestone": {
-        "description": "돌을 곡괭이로 캤을 때 얻는 기본 건축 자재입니다.",
+        :contentReference[oaicite:12]{index=12}
         "recipe": None,
-        "image_url": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/74/Cobblestone.png"
+        :contentReference[oaicite:13]{index=13}
     },
-    "Stick": {
-        "description": "도구나 무기 조합에 쓰이는 중요한 부품입니다.",
+    "Furnace": {
+        :contentReference[oaicite:14]{index=14}
         "recipe": [
-            [None],
-            ["Oak Planks"],
-            ["Oak Planks"]
+            :contentReference[oaicite:15]{index=15}
+            :contentReference[oaicite:16]{index=16}
+            :contentReference[oaicite:17]{index=17}
         ],
-        "image_url": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/f7/Stick_JE2_BE2.png"
+        :contentReference[oaicite:18]{index=18}
+    },
+    "Dirt": {
+        :contentReference[oaicite:19]{index=19}
+        "recipe": None,
+        :contentReference[oaicite:20]{index=20}
     }
 }
 
-# 블럭 선택
-selected_block = st.selectbox("🧱 블럭을 선택하세요", list(block_data.keys()))
+:contentReference[oaicite:21]{index=21}
 
-# 선택된 블럭 정보 표시
-block = block_data[selected_block]
-st.header(f"🧱 {selected_block}")
-st.image(block["image_url"], width=100)
-st.markdown(f"**설명:** {block['description']}")
+# 블록 선택 UI
+:contentReference[oaicite:22]{index=22}
+:contentReference[oaicite:23]{index=23}
 
-# 조합식 시각화
-if block["recipe"]:
-    st.markdown("### 🧩 조합식")
-    for row in block["recipe"]:
-        cols = st.columns(len(row))
-        for col, item in zip(cols, row):
-            if item and item in block_data:
-                response = requests.get(block_data[item]["image_url"])
-                image = Image.open(BytesIO(response.content))
-                col.image(image, width=50, caption=item)
+# 블록 정보 표시
+:contentReference[oaicite:24]{index=24}
+:contentReference[oaicite:25]{index=25}
+:contentReference[oaicite:26]{index=26}
+:contentReference[oaicite:27]{index=27}
+
+# 조합식 출력
+:contentReference[oaicite:28]{index=28}
+    :contentReference[oaicite:29]{index=29}
+    :contentReference[oaicite:30]{index=30}
+        :contentReference[oaicite:31]{index=31}
+        :contentReference[oaicite:32]{index=32}
+            if item:
+                :contentReference[oaicite:33]{index=33}
+                :contentReference[oaicite:34]{index=34}
+                :contentReference[oaicite:35]{index=35}
             else:
-                col.markdown(" ")
+                c.markdown(" ")
 else:
-    st.info("이 블럭은 자연에서 획득하거나 조합 없이 얻을 수 있습니다.")
+    :contentReference[oaicite:36]{index=36}
+
 
