@@ -1,78 +1,48 @@
 import streamlit as st
-from PIL import Image
-import requests
-from io import BytesIO
+import plotly.graph_objects as go
 
-# 블록 데이터 (이미지 URL 포함)
-block_data = {
-    "Oak Log": {
-        :contentReference[oaicite:1]{index=1}
-        "recipe": None,
-        :contentReference[oaicite:2]{index=2}
-    },
-    "Oak Planks": {
-        :contentReference[oaicite:3]{index=3}
-        "recipe": [
-            :contentReference[oaicite:4]{index=4}
-            :contentReference[oaicite:5]{index=5}
-        ],
-        :contentReference[oaicite:6]{index=6}
-    },
-    "Crafting Table": {
-        :contentReference[oaicite:7]{index=7}
-        "recipe": [
-            :contentReference[oaicite:8]{index=8}
-            :contentReference[oaicite:9]{index=9}
-            :contentReference[oaicite:10]{index=10}
-        ],
-        :contentReference[oaicite:11]{index=11}
-    },
-    "Cobblestone": {
-        :contentReference[oaicite:12]{index=12}
-        "recipe": None,
-        :contentReference[oaicite:13]{index=13}
-    },
-    "Furnace": {
-        :contentReference[oaicite:14]{index=14}
-        "recipe": [
-            :contentReference[oaicite:15]{index=15}
-            :contentReference[oaicite:16]{index=16}
-            :contentReference[oaicite:17]{index=17}
-        ],
-        :contentReference[oaicite:18]{index=18}
-    },
-    "Dirt": {
-        :contentReference[oaicite:19]{index=19}
-        "recipe": None,
-        :contentReference[oaicite:20]{index=20}
-    }
-}
+st.title("📦 3D 직육면체 시뮬레이터")
 
-:contentReference[oaicite:21]{index=21}
+# 사용자 입력
+width = st.number_input("가로 (X축)", min_value=1.0, value=2.0)
+depth = st.number_input("세로 (Y축)", min_value=1.0, value=3.0)
+height = st.number_input("높이 (Z축)", min_value=1.0, value=4.0)
 
-# 블록 선택 UI
-:contentReference[oaicite:22]{index=22}
-:contentReference[oaicite:23]{index=23}
+# 꼭짓점 좌표 계산
+x = [0, width, width, 0, 0, width, width, 0]
+y = [0, 0, depth, depth, 0, 0, depth, depth]
+z = [0, 0, 0, 0, height, height, height, height]
 
-# 블록 정보 표시
-:contentReference[oaicite:24]{index=24}
-:contentReference[oaicite:25]{index=25}
-:contentReference[oaicite:26]{index=26}
-:contentReference[oaicite:27]{index=27}
+# 면을 정의 (삼각형 두 개로 하나의 면 구성)
+faces = [
+    [0,1,2], [0,2,3], # 아래면
+    [4,5,6], [4,6,7], # 윗면
+    [0,1,5], [0,5,4], # 앞면
+    [2,3,7], [2,7,6], # 뒷면
+    [1,2,6], [1,6,5], # 오른면
+    [0,3,7], [0,7,4]  # 왼면
+]
 
-# 조합식 출력
-:contentReference[oaicite:28]{index=28}
-    :contentReference[oaicite:29]{index=29}
-    :contentReference[oaicite:30]{index=30}
-        :contentReference[oaicite:31]{index=31}
-        :contentReference[oaicite:32]{index=32}
-            if item:
-                :contentReference[oaicite:33]{index=33}
-                :contentReference[oaicite:34]{index=34}
-                :contentReference[oaicite:35]{index=35}
-            else:
-                c.markdown(" ")
-else:
-    :contentReference[oaicite:36]{index=36}
+# 시각화
+fig = go.Figure(data=[
+    go.Mesh3d(
+        x=x, y=y, z=z,
+        i=[f[0] for f in faces],
+        j=[f[1] for f in faces],
+        k=[f[2] for f in faces],
+        color='lightblue',
+        opacity=0.50
+    )
+])
 
+fig.update_layout(
+    scene=dict(
+        xaxis_title='X (가로)',
+        yaxis_title='Y (세로)',
+        zaxis_title='Z (높이)'
+    ),
+    width=700,
+    height=700
+)
 
+st.plotly_chart(fig)
