@@ -55,7 +55,7 @@ for place in info['highlights']:
 
 # 지도 생성
 m = folium.Map(location=info['coords'], zoom_start=6)
-folium.Marker(info['coords'], tooltip=city, popup=city).add_to(m)
+folium.Marker(info['coords'], tooltip=city, popup=city, icon=folium.Icon(color="red", icon="in).add_to(m)
 
 # 지도 표시
 st_folium(m, width=700, height=500)
